@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import BookPropTypes from './BookPropTypes'
 
 class Book extends React.Component {
   constructor(props) {
@@ -39,9 +39,7 @@ class Book extends React.Component {
 }
 
 Book.propTypes = {
-  cover: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  authors: PropTypes.string.isRequired
+  ...BookPropTypes
 }
 
 export default Book
