@@ -22,12 +22,16 @@ class SearchPage extends React.Component {
     BooksAPI.search(newQueryString, MAX_RESULT)
       .then((booksReturned) => {
         this.setState({
-          books: booksReturned.map(book => ({
-            cover: book.imageLinks.thumbnail,
+          books: booksReturned ? booksReturned.map(book => ({
+            cover: book.imageLinks ? book.imageLinks.thumbnail : '',
             title: book.title,
             authors: book.authors || []
-          }))
+          })) : []
         })
+      })
+      .catch((error) => {
+        // TODO(johnny) Need find a better way to improve UX
+        console.log(error)
       })
   }
 
