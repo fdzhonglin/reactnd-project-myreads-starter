@@ -1,34 +1,65 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import * as BooksAPI from './BooksAPI'
+import Book from './Book'
 
 class SearchPage extends React.Component {
   constructor(props) {
     super(props)
     this.props = props
+    this.state = {
+      books: [],
+      queryString: ''
+    }
+  }
+
+  queryChange = (event) => {
+    const newQueryString = event.target.value
+    this.setState({
+      queryString: newQueryString
+    })
+    const MAX_RESULT = 10
+    BooksAPI.search(newQueryString, MAX_RESULT)
+      .then((booksReturned) => {
+        this.setState({
+          books: booksReturned.map(book => ({
+            cover: book.imageLinks.thumbnail,
+            title: book.title,
+            authors: book.authors || []
+          }))
+        })
+      })
   }
 
   render() {
     const { deactivateSearchPage } = this.props
+    const { books, queryString } = this.state
 
     return (
       <div className="search-books">
         <div className="search-books-bar">
           <a className="close-search" onClick={deactivateSearchPage}>Close</a>
           <div className="search-books-input-wrapper">
-            {/*
-              NOTES: The search from BooksAPI is limited to a particular set of search terms.
-              You can find these search terms here:
-              https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-              However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-              you don't find a specific author or title. Every search is limited by search terms.
-            */}
-            <input type="text" placeholder="Search by title or author" />
-
+            <input
+              type="text"
+              placeholder="Search by title or author"
+              value={queryString}
+              onChange={this.queryChange}
+            />
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid"></ol>
+          <ol className="books-grid">
+            { books.map(book => (
+              <li key={book.cover}>
+                <Book
+                  cover={book.cover}
+                  authors={book.authors}
+                  title={book.title}
+                />
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     )

@@ -18,7 +18,7 @@ class Book extends React.Component {
         <div className="book-top">
           <div
             className="book-cover"
-            style={{ width: 128, height: 193, backgroundImage: cover }}
+            style={{ width: 128, height: 193, backgroundImage: `url("${cover}")` }}
           />
 
           <div className="book-shelf-changer">
@@ -32,7 +32,13 @@ class Book extends React.Component {
           </div>
         </div>
         <div className="book-title">{ title }</div>
-        <div className="book-authors">{ authors }</div>
+        <div className="book-authors">
+          { authors.map(author => (
+            <p key={author}>
+              {author}
+            </p>
+          ))}
+        </div>
       </div>
     )
   }
