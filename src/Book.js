@@ -1,17 +1,42 @@
 import React from 'react'
 import BookPropTypes from './BookPropTypes'
+import * as BooksAPI from './BooksAPI'
+
+const NONE_SHELF = 'none'
 
 class Book extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-
+      shelfName: NONE_SHELF
     }
+  }
+
+  handleChange = (event) => {
+    const newValue = event.target.value
+
+    if (newValue !== NONE_SHELF) {
+      const oldValue = this.state.shelfName
+      const { id } = this.props
+      const book = { id }
+
+      BooksAPI.update(book, newValue)
+        .catch(() => {
+          this.setState({
+            shelfName: oldValue
+          })
+        })
+    }
+
+    this.setState({
+      shelfName: newValue
+    })
   }
 
   render() {
     const { title, cover, authors } = this.props
+    const { shelfName } = this.state
 
     return (
       <div className="book">
@@ -22,8 +47,8 @@ class Book extends React.Component {
           />
 
           <div className="book-shelf-changer">
-            <select>
-              <option value="none" disabled>Move to...</option>
+            <select value={shelfName} onChange={this.handleChange}>
+              <option value="moveTo" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
               <option value="read">Read</option>

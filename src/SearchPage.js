@@ -57,6 +57,7 @@ class SearchPage extends React.Component {
             { books.map(book => (
               <li key={book.id}>
                 <Book
+                  id={book.id}
                   cover={book.cover}
                   authors={book.authors}
                   title={book.title}
