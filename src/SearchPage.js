@@ -25,13 +25,13 @@ class SearchPage extends React.Component {
           books: booksReturned ? booksReturned.map(book => ({
             cover: book.imageLinks ? book.imageLinks.thumbnail : '',
             title: book.title,
-            authors: book.authors || []
+            authors: book.authors || [],
+            id: book.id
           })) : []
         })
       })
-      .catch((error) => {
+      .catch(() => {
         // TODO(johnny) Need find a better way to improve UX
-        console.log(error)
       })
   }
 
@@ -55,7 +55,7 @@ class SearchPage extends React.Component {
         <div className="search-books-results">
           <ol className="books-grid">
             { books.map(book => (
-              <li key={book.cover}>
+              <li key={book.id}>
                 <Book
                   cover={book.cover}
                   authors={book.authors}
