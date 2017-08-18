@@ -23,7 +23,7 @@ class SearchPage extends React.Component {
       .then((booksReturned) => {
         this.setState({
           books: booksReturned ? booksReturned.map(book => ({
-            cover: book.imageLinks ? book.imageLinks.thumbnail : '',
+            cover: book.imageLinks.thumbnail ? book.imageLinks.thumbnail : '',
             title: book.title,
             authors: book.authors || [],
             id: book.id
