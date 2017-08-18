@@ -16,11 +16,13 @@ class ShelfPage extends React.Component {
 
   getShelfsSection() {
     const shelfs = ['currentlyReading', 'wantToRead', 'read']
+    const { updateLibrary } = this.props
 
     return shelfs.map(shelfName => (
       (
         <div key={shelfName}>
           <BookShelf
+            updateLibrary={updateLibrary}
             shelfName={shelfName}
             bookList={this.getShelfBooks(shelfName)}
           />
@@ -53,6 +55,7 @@ class ShelfPage extends React.Component {
 }
 
 ShelfPage.propTypes = {
-  myLibrary: PropTypes.arrayOf(PropTypes.object).isRequired
+  myLibrary: PropTypes.arrayOf(PropTypes.object).isRequired,
+  updateLibrary: PropTypes.func.isRequired
 }
 export default ShelfPage

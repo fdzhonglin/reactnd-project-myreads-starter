@@ -18,7 +18,6 @@ class BooksApp extends React.Component {
     }
   }
 
-
   deactivateSearchPage = () => {
     this.setState({
       showSearchPage: false
@@ -35,6 +34,21 @@ class BooksApp extends React.Component {
       })
   }
 
+  updateLibrary = (book) => {
+    const { id, shelfName } = book
+    const { myLibrary } = this.state
+
+    this.setState({
+      myLibrary: myLibrary.map((bookInLibrary) => {
+        if (bookInLibrary.id === id) {
+          bookInLibrary.shelf = shelfName
+        }
+
+        return bookInLibrary
+      })
+    })
+  }
+
   render() {
     const { myLibrary } = this.state
 
@@ -43,7 +57,7 @@ class BooksApp extends React.Component {
         {this.state.showSearchPage ? (
           <SearchPage deactivateSearchPage={this.deactivateSearchPage} />
         ) : (
-          <ShelfPage myLibrary={myLibrary} />
+          <ShelfPage myLibrary={myLibrary} updateLibrary={this.updateLibrary} />
         )}
       </div>
     )
