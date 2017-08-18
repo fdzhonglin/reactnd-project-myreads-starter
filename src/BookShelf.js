@@ -30,7 +30,7 @@ class BookShelf extends React.Component {
                 <Book
                   updateLibrary={updateLibrary}
                   id={book.id}
-                  cover={book.imageLinks ? book.imageLinks.thumbnail : ''}
+                  cover={book.imageLinks.thumbnail ? book.imageLinks.thumbnail : ''}
                   authors={book.authors}
                   title={book.title}
                   shelfName={book.shelf ? book.shelf : 'none'}
