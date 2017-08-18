@@ -4,6 +4,12 @@ import BookPropTypes from './BookPropTypes'
 import Book from './Book'
 
 class BookShelf extends React.Component {
+  static changeToReadableString(shelfName) {
+    return shelfName
+      .replace(/([A-Z])/g, ' $1')
+      .replace(/^./, str => (str.toUpperCase()))
+  }
+
   constructor(props) {
     super(props)
     this.props = props
@@ -13,14 +19,17 @@ class BookShelf extends React.Component {
     const { shelfName, bookList } = this.props
     return (
       <div className="bookshelf">
-        <h2 className="bookshelf-title">{ shelfName }</h2>
+        <h2 className="bookshelf-title">
+          { BookShelf.changeToReadableString(shelfName) }
+        </h2>
+
         <div className="bookshelf-books">
           <ol className="books-grid">
             { bookList.map(book => (
               <li key={book.id}>
                 <Book
                   id={book.id}
-                  cover={book.cover}
+                  cover={book.imageLinks ? book.imageLinks.thumbnail : ''}
                   authors={book.authors}
                   title={book.title}
                 />

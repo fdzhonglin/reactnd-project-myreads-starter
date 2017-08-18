@@ -1,8 +1,11 @@
 import React from 'react'
 
 import './App.css'
-import BookShelf from './BookShelf'
+
 import SearchPage from './SearchPage'
+import ShelfPage from './ShelfPage'
+
+import * as BooksAPI from './BooksAPI'
 
 class BooksApp extends React.Component {
   constructor(props) {
@@ -11,57 +14,36 @@ class BooksApp extends React.Component {
 
     this.state = {
       showSearchPage: true,
-      bookShelfs: []
+      myLibrary: []
     }
   }
+
 
   deactivateSearchPage = () => {
     this.setState({
       showSearchPage: false
     })
+
+    BooksAPI.getAll()
+      .then(books => (
+        this.setState({
+          myLibrary: books
+        })
+      ))
+      .catch(() => {
+        // TODO(johnny) Handle error of network
+      })
   }
 
   render() {
-    const currentlyReadingShelf = [
-      {
-        id: 'test1',
-        cover: 'http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api',
-        title: 'Harper Lee',
-        authors: ['To Kill a Mockingbird']
-      },
-      {
-        id: 'test2',
-        cover: 'http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api',
-        title: 'Ender\'s Game',
-        authors: ['Orson Scott Card']
-      }
-    ]
+    const { myLibrary } = this.state
 
     return (
       <div className="app">
         {this.state.showSearchPage ? (
           <SearchPage deactivateSearchPage={this.deactivateSearchPage} />
         ) : (
-          <div className="list-books">
-            <div className="list-books-title">
-              <h1>MyReads</h1>
-            </div>
-
-            <div className="list-books-content">
-              <div>
-                <BookShelf
-                  shelfName="Currently Reading"
-                  bookList={currentlyReadingShelf}
-                />
-              </div>
-            </div>
-
-            <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>
-                Add a book
-              </a>
-            </div>
-          </div>
+          <ShelfPage myLibrary={myLibrary} />
         )}
       </div>
     )
