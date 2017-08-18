@@ -1,4 +1,5 @@
 import React from 'react'
+import { Route } from 'react-router-dom'
 
 import './App.css'
 
@@ -13,16 +14,11 @@ class BooksApp extends React.Component {
     this.props = props
 
     this.state = {
-      showSearchPage: true,
       myLibrary: []
     }
   }
 
-  deactivateSearchPage = () => {
-    this.setState({
-      showSearchPage: false
-    })
-
+  componentWillMount = () => {
     BooksAPI.getAll()
       .then(books => (
         this.setState({
@@ -54,15 +50,27 @@ class BooksApp extends React.Component {
 
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-          <SearchPage
-            deactivateSearchPage={this.deactivateSearchPage}
-            myLibrary={myLibrary}
-            updateLibrary={this.updateLibrary}
-          />
-        ) : (
-          <ShelfPage myLibrary={myLibrary} updateLibrary={this.updateLibrary} />
-        )}
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <ShelfPage
+              myLibrary={myLibrary}
+              updateLibrary={this.updateLibrary}
+            />
+          )}
+        />
+
+        <Route
+          exact
+          path="/search"
+          render={() => (
+            <SearchPage
+              myLibrary={myLibrary}
+              updateLibrary={this.updateLibrary}
+            />
+          )}
+        />
       </div>
     )
   }

@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import Book from './Book'
 
@@ -45,13 +46,13 @@ class SearchPage extends React.Component {
   }
 
   render() {
-    const { deactivateSearchPage, updateLibrary } = this.props
+    const { updateLibrary } = this.props
     const { books, queryString } = this.state
 
     return (
       <div className="search-books">
         <div className="search-books-bar">
-          <a className="close-search" onClick={deactivateSearchPage}>Close</a>
+          <Link to="/" className="close-search">Close</Link>
           <div className="search-books-input-wrapper">
             <input
               type="text"
@@ -83,7 +84,6 @@ class SearchPage extends React.Component {
 }
 
 SearchPage.propTypes = {
-  deactivateSearchPage: PropTypes.func.isRequired,
   myLibrary: PropTypes.arrayOf(PropTypes.object).isRequired,
   updateLibrary: PropTypes.func.isRequired
 }
