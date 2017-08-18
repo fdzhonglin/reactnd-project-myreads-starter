@@ -55,7 +55,11 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         {this.state.showSearchPage ? (
-          <SearchPage deactivateSearchPage={this.deactivateSearchPage} />
+          <SearchPage
+            deactivateSearchPage={this.deactivateSearchPage}
+            myLibrary={myLibrary}
+            updateLibrary={this.updateLibrary}
+          />
         ) : (
           <ShelfPage myLibrary={myLibrary} updateLibrary={this.updateLibrary} />
         )}

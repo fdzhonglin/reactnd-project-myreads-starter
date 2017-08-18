@@ -13,6 +13,15 @@ class SearchPage extends React.Component {
     }
   }
 
+  getShelfName(book) {
+    const { id } = book
+    const { myLibrary } = this.props
+
+    const sameBook = myLibrary.find(bookInLibrary => (bookInLibrary.id === id))
+
+    return sameBook ? sameBook.shelf : 'none'
+  }
+
   queryChange = (event) => {
     const newQueryString = event.target.value
     this.setState({
@@ -36,7 +45,7 @@ class SearchPage extends React.Component {
   }
 
   render() {
-    const { deactivateSearchPage } = this.props
+    const { deactivateSearchPage, updateLibrary } = this.props
     const { books, queryString } = this.state
 
     return (
@@ -61,6 +70,8 @@ class SearchPage extends React.Component {
                   cover={book.cover}
                   authors={book.authors}
                   title={book.title}
+                  shelfName={this.getShelfName({ id: book.id })}
+                  updateLibrary={updateLibrary}
                 />
               </li>
             ))}
@@ -72,7 +83,9 @@ class SearchPage extends React.Component {
 }
 
 SearchPage.propTypes = {
-  deactivateSearchPage: PropTypes.func.isRequired
+  deactivateSearchPage: PropTypes.func.isRequired,
+  myLibrary: PropTypes.arrayOf(PropTypes.object).isRequired,
+  updateLibrary: PropTypes.func.isRequired
 }
 
 export default SearchPage
