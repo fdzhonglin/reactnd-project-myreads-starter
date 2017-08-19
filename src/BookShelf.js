@@ -2,7 +2,7 @@ import React from 'react'
 import { DropTarget } from 'react-dnd'
 import PropTypes from 'prop-types'
 
-import Book from './Book'
+import DraggableBook from './DraggableBook'
 import * as BooksAPI from './BooksAPI'
 
 const shelfTarget = {
@@ -20,7 +20,7 @@ const shelfTarget = {
     const book = monitor.getItem()
     const { shelfName, updateLibrary } = props
 
-    updateLibrary({ id: book.id, shelfName })
+    updateLibrary({ ...book, shelf: shelfName })
     BooksAPI.update({ id: book.id }, shelfName)
       .catch(() => {
         updateLibrary(book)
@@ -67,11 +67,11 @@ class BookShelf extends React.Component {
           <ol className="books-grid">
             { bookList.map(book => (
               <li key={book.id}>
-                <Book
+                <DraggableBook
                   updateLibrary={updateLibrary}
                   id={book.id}
                   cover={book.imageLinks.thumbnail ? book.imageLinks.thumbnail : ''}
-                  authors={book.authors}
+                  authors={book.authors ? book.authors : []}
                   title={book.title}
                   shelfName={book.shelf ? book.shelf : 'none'}
                 />

@@ -31,18 +31,26 @@ class BooksApp extends React.Component {
   }
 
   updateLibrary = (book) => {
-    const { id, shelfName } = book
+    const { id, shelf } = book
     const { myLibrary } = this.state
 
-    this.setState({
-      myLibrary: myLibrary.map((bookInLibrary) => {
-        if (bookInLibrary.id === id) {
-          bookInLibrary.shelf = shelfName
-        }
+    const bookInLibrary = myLibrary.find(aBook => (aBook.id === id))
 
-        return bookInLibrary
+    if (bookInLibrary) {
+      this.setState({
+        myLibrary: myLibrary.map((aBook) => {
+          if (aBook.id === id) {
+            aBook.shelf = shelf
+          }
+
+          return aBook
+        })
       })
-    })
+    } else {
+      this.setState({
+        myLibrary: [...myLibrary, book]
+      })
+    }
   }
 
   render() {
