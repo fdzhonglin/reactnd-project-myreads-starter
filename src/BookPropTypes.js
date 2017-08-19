@@ -6,7 +6,8 @@ const BookPropTypes = {
   title: PropTypes.string.isRequired,
   authors: PropTypes.arrayOf(PropTypes.string).isRequired,
   shelfName: PropTypes.string.isRequired,
-  updateLibrary: PropTypes.func.isRequired
+  updateLibrary: PropTypes.func.isRequired,
+  connectDragSource: PropTypes.func
 }
 
 export default BookPropTypes

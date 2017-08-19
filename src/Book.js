@@ -1,6 +1,19 @@
 import React from 'react'
+import { DragSource } from 'react-dnd'
 import BookPropTypes from './BookPropTypes'
 import * as BooksAPI from './BooksAPI'
+
+const bookSource = {
+  beginDrag(props) {
+    return { id: props.id, shelfName: props.shelfName }
+  }
+}
+
+function collect(connet) {
+  return {
+    connectDragSource: connet.dragSource()
+  }
+}
 
 class Book extends React.Component {
   constructor(props) {
@@ -33,9 +46,9 @@ class Book extends React.Component {
   }
 
   render() {
-    const { title, cover, authors, shelfName } = this.props
+    const { title, cover, authors, shelfName, connectDragSource } = this.props
 
-    return (
+    return connectDragSource(
       <div className="book">
         <div className="book-top">
           <div
@@ -70,4 +83,4 @@ Book.propTypes = {
   ...BookPropTypes
 }
 
-export default Book
+export default DragSource('book', bookSource, collect)(Book)
