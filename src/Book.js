@@ -1,6 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-import BookPropTypes from './BookPropTypes'
 import * as BooksAPI from './BooksAPI'
 
 class Book extends React.Component {
@@ -54,11 +54,7 @@ class Book extends React.Component {
         </div>
         <div className="book-title">{ title }</div>
         <div className="book-authors">
-          { authors.map(author => (
-            <p key={author}>
-              {author}
-            </p>
-          ))}
+          { authors.join(', ') }
         </div>
       </div>
     )
@@ -66,7 +62,12 @@ class Book extends React.Component {
 }
 
 Book.propTypes = {
-  ...BookPropTypes
+  id: PropTypes.string.isRequired,
+  cover: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  authors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  shelf: PropTypes.string.isRequired,
+  updateLibrary: PropTypes.func.isRequired
 }
 
 export default Book

@@ -2,7 +2,6 @@ import React from 'react'
 import { DragSource } from 'react-dnd'
 import PropTypes from 'prop-types'
 
-import BookPropTypes from './BookPropTypes'
 import Book from './Book'
 
 const bookSource = {
@@ -43,7 +42,12 @@ class DraggableBook extends React.Component {
 }
 
 DraggableBook.propTypes = {
-  ...BookPropTypes,
+  id: PropTypes.string.isRequired,
+  cover: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  authors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  shelf: PropTypes.string.isRequired,
+  updateLibrary: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired
 }
 

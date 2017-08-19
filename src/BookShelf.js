@@ -52,10 +52,7 @@ class BookShelf extends React.Component {
     const { shelf, bookList, updateLibrary } = this.props
     const { connectDropTarget, isOver, canDrop } = this.props
 
-    let shelfClass = 'bookshelf'
-    if (isOver && canDrop) {
-      shelfClass = 'bookshelf bookshelf--droppable'
-    }
+    const shelfClass = (isOver && canDrop) ? 'bookshelf bookshelf--droppable' : 'bookshelf'
 
     return connectDropTarget(
       <div className={shelfClass}>

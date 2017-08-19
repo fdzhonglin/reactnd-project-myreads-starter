@@ -7,11 +7,6 @@ import HTML5Backend from 'react-dnd-html5-backend'
 import BookShelf from './BookShelf'
 
 class ShelfPage extends React.Component {
-  constructor(props) {
-    super(props)
-    this.props = props
-  }
-
   getShelfBooks(shelf) {
     const { myLibrary } = this.props
 

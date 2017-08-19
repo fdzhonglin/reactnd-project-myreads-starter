@@ -24,10 +24,15 @@ class SearchPage extends React.Component {
   }
 
   queryChange = (event) => {
-    const newQueryString = event.target.value
+    const newQueryString = event.target.value.trim()
     this.setState({
       queryString: newQueryString
     })
+
+    if (newQueryString.length === 0) {
+      return
+    }
+
     const MAX_RESULT = 10
     BooksAPI.search(newQueryString, MAX_RESULT)
       .then((booksReturned) => {
