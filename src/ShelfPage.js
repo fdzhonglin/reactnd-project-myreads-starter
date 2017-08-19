@@ -12,23 +12,23 @@ class ShelfPage extends React.Component {
     this.props = props
   }
 
-  getShelfBooks(shelfName) {
+  getShelfBooks(shelf) {
     const { myLibrary } = this.props
 
-    return myLibrary.filter(book => book.shelf === shelfName)
+    return myLibrary.filter(book => book.shelf === shelf)
   }
 
   getShelfsSection() {
     const shelfs = ['currentlyReading', 'wantToRead', 'read']
     const { updateLibrary } = this.props
 
-    return shelfs.map(shelfName => (
+    return shelfs.map(shelf => (
       (
-        <div key={shelfName}>
+        <div key={shelf}>
           <BookShelf
             updateLibrary={updateLibrary}
-            shelfName={shelfName}
-            bookList={this.getShelfBooks(shelfName)}
+            shelf={shelf}
+            bookList={this.getShelfBooks(shelf)}
           />
         </div>
       )

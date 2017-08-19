@@ -33,10 +33,11 @@ class SearchPage extends React.Component {
       .then((booksReturned) => {
         this.setState({
           books: booksReturned ? booksReturned.map(book => ({
-            cover: book.imageLinks.thumbnail ? book.imageLinks.thumbnail : '',
-            title: book.title,
+            id: book.id,
+            cover: book.imageLinks ? book.imageLinks.thumbnail : '',
             authors: book.authors || [],
-            id: book.id
+            title: book.title,
+            shelf: book.shelf ? book.shelf : 'none'
           })) : []
         })
       })
@@ -71,7 +72,7 @@ class SearchPage extends React.Component {
                   cover={book.cover}
                   authors={book.authors}
                   title={book.title}
-                  shelfName={this.getShelfName({ id: book.id })}
+                  shelf={this.getShelfName({ id: book.id })}
                   updateLibrary={updateLibrary}
                 />
               </li>

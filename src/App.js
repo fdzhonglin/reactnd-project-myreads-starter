@@ -22,7 +22,13 @@ class BooksApp extends React.Component {
     BooksAPI.getAll()
       .then(books => (
         this.setState({
-          myLibrary: books
+          myLibrary: books.map(book => ({
+            id: book.id,
+            cover: book.imageLinks ? book.imageLinks.thumbnail : '',
+            authors: book.authors || [],
+            title: book.title,
+            shelf: book.shelf ? book.shelf : 'none'
+          }))
         })
       ))
       .catch(() => {

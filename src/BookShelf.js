@@ -9,7 +9,7 @@ const shelfTarget = {
   canDrop(props, monitor) {
     const book = monitor.getItem()
 
-    if (book.shelfName !== props.shelfName) {
+    if (book.shelf !== props.shelf) {
       return true
     }
 
@@ -18,10 +18,10 @@ const shelfTarget = {
 
   drop(props, monitor) {
     const book = monitor.getItem()
-    const { shelfName, updateLibrary } = props
+    const { shelf, updateLibrary } = props
 
-    updateLibrary({ ...book, shelf: shelfName })
-    BooksAPI.update({ id: book.id }, shelfName)
+    updateLibrary({ ...book, shelf })
+    BooksAPI.update({ id: book.id }, shelf)
       .catch(() => {
         updateLibrary(book)
       })
@@ -37,8 +37,8 @@ function collect(connect, monitor) {
 }
 
 class BookShelf extends React.Component {
-  static changeToReadableString(shelfName) {
-    return shelfName
+  static changeToReadableString(shelf) {
+    return shelf
       .replace(/([A-Z])/g, ' $1')
       .replace(/^./, str => (str.toUpperCase()))
   }
@@ -49,7 +49,7 @@ class BookShelf extends React.Component {
   }
 
   render() {
-    const { shelfName, bookList, updateLibrary } = this.props
+    const { shelf, bookList, updateLibrary } = this.props
     const { connectDropTarget, isOver, canDrop } = this.props
 
     let shelfClass = 'bookshelf'
@@ -60,7 +60,7 @@ class BookShelf extends React.Component {
     return connectDropTarget(
       <div className={shelfClass}>
         <h2 className="bookshelf-title">
-          { BookShelf.changeToReadableString(shelfName) }
+          { BookShelf.changeToReadableString(shelf) }
         </h2>
 
         <div className="bookshelf-books">
@@ -70,10 +70,10 @@ class BookShelf extends React.Component {
                 <DraggableBook
                   updateLibrary={updateLibrary}
                   id={book.id}
-                  cover={book.imageLinks.thumbnail ? book.imageLinks.thumbnail : ''}
-                  authors={book.authors ? book.authors : []}
+                  cover={book.cover}
+                  authors={book.authors}
                   title={book.title}
-                  shelfName={book.shelf ? book.shelf : 'none'}
+                  shelf={book.shelf}
                 />
               </li>
             ))}
@@ -88,7 +88,7 @@ BookShelf.propTypes = {
   connectDropTarget: PropTypes.func.isRequired,
   isOver: PropTypes.bool.isRequired,
   canDrop: PropTypes.bool.isRequired,
-  shelfName: PropTypes.string.isRequired,
+  shelf: PropTypes.string.isRequired,
   updateLibrary: PropTypes.func.isRequired,
   bookList: PropTypes.arrayOf(PropTypes.object).isRequired
 }

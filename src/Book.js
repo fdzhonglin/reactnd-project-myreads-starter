@@ -11,19 +11,17 @@ class Book extends React.Component {
 
   handleChange = (event) => {
     const newValue = event.target.value
-    const { shelfName, updateLibrary } = this.props
+    const { shelf, updateLibrary } = this.props
 
-    if (newValue !== shelfName) {
-      const oldValue = shelfName
-      const { id } = this.props
-      const book = { id }
+    if (newValue !== shelf) {
+      const oldValue = shelf
 
       updateLibrary({
         ...this.props,
         shelf: newValue
       })
 
-      BooksAPI.update(book, newValue)
+      BooksAPI.update({ id: this.props.id }, newValue)
         .catch(() => {
           updateLibrary({
             ...this.props,
@@ -34,7 +32,7 @@ class Book extends React.Component {
   }
 
   render() {
-    const { title, cover, authors, shelfName } = this.props
+    const { title, cover, authors, shelf } = this.props
 
     return (
       <div className="book">
@@ -45,7 +43,7 @@ class Book extends React.Component {
           />
 
           <div className="book-shelf-changer">
-            <select value={shelfName} onChange={this.handleChange}>
+            <select value={shelf} onChange={this.handleChange}>
               <option value="moveTo" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>

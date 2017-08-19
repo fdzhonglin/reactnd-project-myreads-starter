@@ -7,7 +7,7 @@ import Book from './Book'
 
 const bookSource = {
   beginDrag(props) {
-    return { ...props, shelf: props.shelfName }
+    return { ...props }
   }
 }
 
@@ -24,7 +24,7 @@ class DraggableBook extends React.Component {
   }
 
   render() {
-    const { id, title, cover, authors, shelfName, updateLibrary } = this.props
+    const { id, title, cover, authors, shelf, updateLibrary } = this.props
     const { connectDragSource } = this.props
 
     return connectDragSource(
@@ -34,7 +34,7 @@ class DraggableBook extends React.Component {
           title={title}
           cover={cover}
           authors={authors}
-          shelfName={shelfName}
+          shelf={shelf}
           updateLibrary={updateLibrary}
         />
       </div>
