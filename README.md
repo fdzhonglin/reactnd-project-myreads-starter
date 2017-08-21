@@ -18,7 +18,7 @@ $ npm install
 Suppose you are in the root directory of project.
 
 ```
-$ npm run
+$ npm start
 ```
 The web browser will open url `localhost:3000` as my project root url, if not, please open yourself. You will see the library page.
 
