@@ -1,10 +1,11 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 
 import './App.css'
 
 import SearchPage from './SearchPage'
 import ShelfPage from './ShelfPage'
+import NoMatch from './NoMatch'
 
 import * as BooksAPI from './BooksAPI'
 
@@ -64,27 +65,31 @@ class BooksApp extends React.Component {
 
     return (
       <div className="app">
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <ShelfPage
-              myLibrary={myLibrary}
-              updateLibrary={this.updateLibrary}
-            />
-          )}
-        />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <ShelfPage
+                myLibrary={myLibrary}
+                updateLibrary={this.updateLibrary}
+              />
+            )}
+          />
 
-        <Route
-          exact
-          path="/search"
-          render={() => (
-            <SearchPage
-              myLibrary={myLibrary}
-              updateLibrary={this.updateLibrary}
-            />
-          )}
-        />
+          <Route
+            exact
+            path="/search"
+            render={() => (
+              <SearchPage
+                myLibrary={myLibrary}
+                updateLibrary={this.updateLibrary}
+              />
+            )}
+          />
+
+          <Route component={NoMatch} />
+        </Switch>
       </div>
     )
   }
