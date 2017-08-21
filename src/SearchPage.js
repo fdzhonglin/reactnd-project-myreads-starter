@@ -30,12 +30,22 @@ class SearchPage extends React.Component {
     })
 
     if (newQueryString.length === 0) {
+      this.setState({
+        books: []
+      })
       return
     }
 
     const MAX_RESULT = 10
     BooksAPI.search(newQueryString, MAX_RESULT)
       .then((booksReturned) => {
+        if (booksReturned.error) {
+          this.setState({
+            books: []
+          })
+
+          return
+        }
         this.setState({
           books: booksReturned ? booksReturned.map(book => ({
             id: book.id,
@@ -47,7 +57,9 @@ class SearchPage extends React.Component {
         })
       })
       .catch(() => {
-        // TODO(johnny) Need find a better way to improve UX
+        this.setState({
+          books: []
+        })
       })
   }
 
